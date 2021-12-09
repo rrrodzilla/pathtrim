@@ -9,7 +9,7 @@ last *n* parts of a path.
 ```text
 // in Cargo.toml
 [dependencies]
-pathtrim = "1.0.0"
+pathtrim = "1.0.3"
 ```
 
 ```rust
@@ -17,7 +17,9 @@ pathtrim = "1.0.0"
    // at the top of your source file
    use pathtrim::TrimmablePath;
 
-   // TrimmablePath is automatically implemented for all std::path::Paths in scope
+   // TrimmablePath is automatically implemented for all 
+   // std::path::Paths in the module's scope
+
    let path = Path::new("/usr/local/bin/");
    
    let trimmed = path.trim_to_nth(1).unwrap();
