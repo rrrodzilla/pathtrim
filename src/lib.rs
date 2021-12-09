@@ -1,7 +1,7 @@
 #![deny(missing_docs)]
 #![forbid(unsafe_code)]
 
-//! trimpath - When all you need is the last few parts of a path.
+//! pathtrim - When all you need is the last few parts of a path.
 //!
 //! This crate implements the TrimmablePath trait on std::path::Path so you can easily obtain the
 //! last *n* parts of a path.
