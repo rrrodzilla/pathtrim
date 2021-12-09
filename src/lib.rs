@@ -38,6 +38,7 @@ use std::path::Path;
 pub trait TrimmablePath: AsRef<Path> {
     /// Returns an Option<&Path> in case *n* is longer
     /// than the length of the Path, otherwise None
+    /// Algorithm inspired by @nnethercote in the Zulip Rust channel: ![image](https://user-images.githubusercontent.com/24578097/145341121-1e858f4b-5ab9-436c-bcc4-9ee6effa6340.png)
     fn trim_to_nth(&self, n: usize) -> Option<&Path> {
         let path = self.as_ref();
         let len = path.components().count();
