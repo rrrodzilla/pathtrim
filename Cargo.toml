@@ -2,11 +2,13 @@
 name = "pathtrim"
 version = "1.0.0"
 edition = "2021"
+repository = "https://github.com/rrrodzilla/pathtrim"
 authors = ["Roland Rodriguez <rolandrodriguez@gmail.com"]
 description = "trimpath - When all you need is the last few parts of a path, this crate implements the TrimmablePath trait on std::path::Path so you can easily obtain the last *n* parts of the path."
 license = "MIT OR Apache-2.0"
-keywords = ["std::path::Path", "Path", "utilities", "path utilities", "path traits"]
+keywords = ["Path", "utilities", "path-utilities", "path-traits"]
 categories = ["os", "text-processing"]
+readme = "readme.md"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
