@@ -1,6 +1,6 @@
 [package]
 name = "pathtrim"
-version = "1.0.2"
+version = "1.0.3"
 edition = "2021"
 repository = "https://github.com/rrrodzilla/pathtrim"
 authors = ["Roland Rodriguez <rolandrodriguez@gmail.com"]
