@@ -5,7 +5,7 @@
 //!
 //! This crate implements the TrimmablePath trait on anything that implements
 //! AsRef<std::path::Path> so you can easily obtain the last *n* parts of a path.
-//! One good implementor that comes to mind is std::path::Path 
+//! One good implementor that comes to mind is std::path::Path
 //!
 //! # Usage
 //!
@@ -42,10 +42,12 @@ use std::path::Path;
 /// The TrimmablePath trait on std::path::Path so you can easily obtain the
 /// last *n* parts of anything that implements AsRef<Path>.
 pub trait TrimmablePath: AsRef<Path> {
-    /// Returns an Option<&Path>. 
+    /// Returns an Option<&Path>.
     /// If *n* is longer than the length of the Path, returns None
-    /// Algorithm inspired by @nnethercote in the Zulip Rust channel: 
+    /// Algorithm inspired by @nnethercote in the Zulip Rust channel:
+    ///
     /// ![image](https://user-images.githubusercontent.com/24578097/145341121-1e858f4b-5ab9-436c-bcc4-9ee6effa6340.png)
+    ///
     fn trim_to_nth(&self, n: usize) -> Option<&Path> {
         let path = self.as_ref();
         let len = path.components().count();
