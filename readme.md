@@ -1,16 +1,9 @@
 # pathtrim
 ## When all you need is the last few parts of a path.
 
-This crate implements the TrimmablePath trait on [std::path::Path](https://doc.rust-lang.org/std/path/struct.Path.html) so you can easily obtain the
-last *n* parts of a path.
+This crate implements the TrimmablePath trait on anything that implements AsRef<[std::path::Path](https://doc.rust-lang.org/std/path/struct.Path.html)> so you can easily obtain the last *n* parts of a path.  One good implementor of AsRef<[std::path::Path](https://doc.rust-lang.org/std/path/struct.Path.html)> that comes to mind is [std::path::Path](https://doc.rust-lang.org/std/path/struct.Path.html) 
 
 # Usage
-
-```text
-// in Cargo.toml
-[dependencies]
-pathtrim = "1.0.3"
-```
 
 ```rust
    use std::path::Path;

@@ -1,10 +1,10 @@
 [package]
 name = "pathtrim"
-version = "1.0.3"
+version = "1.0.4"
 edition = "2021"
 repository = "https://github.com/rrrodzilla/pathtrim"
 authors = ["Roland Rodriguez <rolandrodriguez@gmail.com"]
-description = "pathtrim - When all you need is the last few parts of a path, this crate implements the TrimmablePath trait on std::path::Path so you can easily obtain the last *n* parts of the path."
+description = "This crate implements the TrimmablePath trait on anything that implements AsRef<std::path::Path> so you can easily obtain the last *n* parts of a path."
 license = "MIT OR Apache-2.0"
 keywords = ["Path", "utilities", "path-utilities", "path-traits"]
 categories = ["os", "text-processing"]
