@@ -44,6 +44,7 @@ use std::path::Path;
 pub trait TrimmablePath: AsRef<Path> {
     /// Returns an Option<&Path>.
     /// If *n* is longer than the length of the Path, returns None
+    ///
     /// Algorithm inspired by @nnethercote in the Zulip Rust channel:
     ///
     /// ![image](https://user-images.githubusercontent.com/24578097/145341121-1e858f4b-5ab9-436c-bcc4-9ee6effa6340.png)
