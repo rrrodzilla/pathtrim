@@ -100,8 +100,8 @@ mod tests {
     #[test]
     fn trimmable_path_windows_edge_cases() {
         let p = Path::new(r"C:\");
-        let trimmed = p.trim_to_nth(1);
-        assert!(trimmed.is_none());
+        let trimmed = p.trim_to_nth(1).unwrap();
+        assert_eq!(trimmed.to_str().unwrap(), r"\");
     }
 
     #[cfg(any(target_os = "macos", target_os = "ios"))]
@@ -113,7 +113,10 @@ mod tests {
         let trimmed = p.trim_to_nth(2).unwrap();
         assert_eq!(trimmed.to_str().unwrap(), "Application Support/package");
         let trimmed = p.trim_to_nth(3).unwrap();
-        assert_eq!(trimmed.to_str().unwrap(), "Library/Application Support/package");
+        assert_eq!(
+            trimmed.to_str().unwrap(),
+            "Library/Application Support/package"
+        );
         let trimmed = p.trim_to_nth(4);
         assert!(trimmed.is_none());
     }
