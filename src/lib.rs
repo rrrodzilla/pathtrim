@@ -62,20 +62,7 @@ mod tests {
 
     #[cfg(not(windows))]
     #[test]
-    fn it_works() {
-        let p = Path::new("/usr/local/bin/");
-        let trimmed = p.trim_to_nth(1).unwrap();
-        assert_eq!(trimmed.to_str().unwrap(), "bin");
-        let trimmed = p.trim_to_nth(2).unwrap();
-        assert_eq!(trimmed.to_str().unwrap(), "local/bin");
-        let trimmed = p.trim_to_nth(3).unwrap();
-        assert_eq!(trimmed.to_str().unwrap(), "usr/local/bin");
-        let trimmed = p.trim_to_nth(300);
-        assert!(trimmed.is_none());
-    }
-    #[cfg(not(windows))]
-    #[test]
-    fn it_works_1() {
+    fn trimmable_path_unix_basic_cases() {
         let p = Path::new("/usr/local/bin/");
         let trimmed = p.trim_to_nth(1).unwrap();
         assert_eq!(trimmed.to_str().unwrap(), "bin");
@@ -85,13 +72,19 @@ mod tests {
         assert_eq!(trimmed.to_str().unwrap(), "usr/local/bin");
         let trimmed = p.trim_to_nth(4);
         assert!(trimmed.is_none());
-        let trimmed = p.trim_to_nth(300);
+    }
+
+    #[cfg(not(windows))]
+    #[test]
+    fn trimmable_path_unix_edge_cases() {
+        let p = Path::new("/");
+        let trimmed = p.trim_to_nth(1);
         assert!(trimmed.is_none());
     }
 
     #[cfg(windows)]
     #[test]
-    fn it_works_on_windows() {
+    fn trimmable_path_windows_basic_cases() {
         let p = Path::new(r"C:\Program Files\package\bin\");
         let trimmed = p.trim_to_nth(1).unwrap();
         assert_eq!(trimmed.to_str().unwrap(), "bin");
@@ -99,7 +92,29 @@ mod tests {
         assert_eq!(trimmed.to_str().unwrap(), r"package\bin");
         let trimmed = p.trim_to_nth(3).unwrap();
         assert_eq!(trimmed.to_str().unwrap(), r"Program Files\package\bin");
-        let trimmed = p.trim_to_nth(5); // Changed from `4` to `5`.
+        let trimmed = p.trim_to_nth(5);
+        assert!(trimmed.is_none());
+    }
+
+    #[cfg(windows)]
+    #[test]
+    fn trimmable_path_windows_edge_cases() {
+        let p = Path::new(r"C:\");
+        let trimmed = p.trim_to_nth(1);
+        assert!(trimmed.is_none());
+    }
+
+    #[cfg(any(target_os = "macos", target_os = "ios"))]
+    #[test]
+    fn trimmable_path_macos_basic_cases() {
+        let p = Path::new("/Library/Application Support/package/");
+        let trimmed = p.trim_to_nth(1).unwrap();
+        assert_eq!(trimmed.to_str().unwrap(), "package");
+        let trimmed = p.trim_to_nth(2).unwrap();
+        assert_eq!(trimmed.to_str().unwrap(), "Application Support/package");
+        let trimmed = p.trim_to_nth(3).unwrap();
+        assert_eq!(trimmed.to_str().unwrap(), "Library/Application Support/package");
+        let trimmed = p.trim_to_nth(4);
         assert!(trimmed.is_none());
     }
 }
