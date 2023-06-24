@@ -2,6 +2,7 @@ use std::path::Path;
 
 use pathtrim::TrimmablePath;
 
+#[cfg(not(windows))]
 #[test]
 fn it_works() {
     let p = Path::new("/usr/local/bin/");
