@@ -75,6 +75,7 @@ mod tests {
 
     use crate::TrimmablePath;
 
+    #[cfg(not(windows))]
     #[test]
     fn it_works() {
         let p = Path::new("/usr/local/bin/");
