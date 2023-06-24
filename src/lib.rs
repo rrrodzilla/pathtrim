@@ -1,4 +1,3 @@
-#![deny(missing_docs)]
 #![forbid(unsafe_code)]
 
 //! pathtrim - When all you need is the last few parts of a path.
@@ -9,36 +8,50 @@
 //!
 //! # Usage
 //!
-use std::path::{Component, Path, PathBuf, MAIN_SEPARATOR};
 
-/// The TrimmablePath trait on std::path::Path so you can easily obtain the
-/// last *n* parts of anything that implements AsRef<Path>.
+use std::collections::VecDeque;
+use std::path::{Path, PathBuf};
+
 pub trait TrimmablePath: AsRef<Path> {
-    /// Returns an Option<&Path>.
-    /// If *n* is longer than the length of the Path, returns None
-    ///
-    /// Algorithm inspired by @nnethercote in the Zulip Rust channel:
-    ///
-    /// ![image](https://user-images.githubusercontent.com/24578097/145341121-1e858f4b-5ab9-436c-bcc4-9ee6effa6340.png)
     fn trim_to_nth(&self, n: usize) -> Option<PathBuf> {
         let path = self.as_ref();
-        let components: Vec<_> = path.components().collect();
-        let len = components.len();
+        let components_iter = path.components();
 
-        if len > n {
-            let trimmed_components: Vec<_> = components.into_iter().skip(len - n).collect();
-            let mut trimmed = trimmed_components.iter().collect::<PathBuf>();
-            if trimmed_components.last().map(|c| c.as_os_str()) == Some(Component::RootDir.as_ref())
-            {
-                trimmed = trimmed.join(MAIN_SEPARATOR.to_string());
+        if n >= path.components().count() {
+            return None;
+        }
+
+        let mut last_n_components = VecDeque::with_capacity(n);
+
+        for component in components_iter {
+            println!("component: {:?}", component);
+            println!("n: {n}");
+            println!("last_n_components.len(): {:?}", last_n_components.len());
+
+            if last_n_components.len() == n {
+                println!("bm 1");
+                last_n_components.pop_front();
             }
-            Some(trimmed)
-        } else {
+            println!("bm 2");
+            last_n_components.push_back(component);
+        }
+
+        if last_n_components.len() > n {
+            println!("bm 3");
             None
+        } else {
+            println!("bm 4");
+            let mut trimmed = PathBuf::new();
+            println!("bm 5");
+            for component in last_n_components {
+                trimmed.push(component);
+            }
+            println!("bm 7");
+            println!("trimmed {:?}", trimmed);
+            Some(trimmed)
         }
     }
-}
-// automagically implement for all Paths in usage scope
+} // automagically implement for all Paths in usage scope
 impl TrimmablePath for Path {}
 
 #[cfg(test)]
@@ -57,6 +70,21 @@ mod tests {
         assert_eq!(trimmed.to_str().unwrap(), "local/bin");
         let trimmed = p.trim_to_nth(3).unwrap();
         assert_eq!(trimmed.to_str().unwrap(), "usr/local/bin");
+        let trimmed = p.trim_to_nth(300);
+        assert!(trimmed.is_none());
+    }
+    #[cfg(not(windows))]
+    #[test]
+    fn it_works_1() {
+        let p = Path::new("/usr/local/bin/");
+        let trimmed = p.trim_to_nth(1).unwrap();
+        assert_eq!(trimmed.to_str().unwrap(), "bin");
+        let trimmed = p.trim_to_nth(2).unwrap();
+        assert_eq!(trimmed.to_str().unwrap(), "local/bin");
+        let trimmed = p.trim_to_nth(3).unwrap();
+        assert_eq!(trimmed.to_str().unwrap(), "usr/local/bin");
+        let trimmed = p.trim_to_nth(4);
+        assert!(trimmed.is_none());
         let trimmed = p.trim_to_nth(300);
         assert!(trimmed.is_none());
     }
