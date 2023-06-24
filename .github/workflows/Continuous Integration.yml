@@ -48,7 +48,7 @@ jobs:
           git config --global user.email "rrrodzilla@proton.me"
           git config --global user.name "rodzilla"
       - name: Run cargo check
-        run: cargo check --workspace --locked --target=${{ matrix.platform.target }}
+        run: cargo check --workspace --target=${{ matrix.platform.target }}
       - name: Run cargo test
-        run: cargo test --workspace --locked --target=${{ matrix.platform.target }}
+        run: cargo test --workspace --target=${{ matrix.platform.target }}
 
