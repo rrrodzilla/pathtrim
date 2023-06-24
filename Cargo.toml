@@ -1,14 +1,13 @@
 [package]
 name = "pathtrim"
-version = "1.0.6"
+version = "2.0.0"
 edition = "2021"
 repository = "https://github.com/rrrodzilla/pathtrim"
-authors = ["Roland Rodriguez <rolandrodriguez@gmail.com"]
+authors = ["rrrodzilla <rrrodzilla@proton.me>"]
 description = "This crate implements the TrimmablePath trait on anything that implements AsRef<std::path::Path> so you can easily obtain the last *n* parts of a path."
 license = "MIT OR Apache-2.0"
-keywords = ["Path", "utilities", "path-utilities", "path-traits"]
-categories = ["os", "text-processing"]
+documentation = "https://docs.rs/pathtrim"
+keywords = ["path-processing","path-utils", "file-paths", "path-manipulation", "path-trimming"]
+categories = ["os", "text-processing", "filesystem", "development-tools", "value-formatting"]
 readme = "readme.md"
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[dependencies]
