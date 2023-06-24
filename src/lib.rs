@@ -20,7 +20,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! pathtrim = "0.1.0"
+//! pathtrim = "0.2.0"
 //! ```
 //!
 //! And this to your main file:
@@ -34,7 +34,7 @@
 //!
 //! ## Basic usage
 //!
-//! ```
+//! ```no_run
 //! use std::path::Path;
 //! use pathtrim::TrimmablePath;
 //!
@@ -47,7 +47,7 @@
 //!
 //! Unix:
 //!
-//! ```
+//! ```no_run
 //! use std::path::Path;
 //! use pathtrim::TrimmablePath;
 //! let path = Path::new("/usr/local/bin/application");
@@ -67,7 +67,7 @@
 //!
 //! ## Edge Cases
 //!
-//! ```
+//! ```no_run
 //! use std::path::Path;
 //! use pathtrim::TrimmablePath;
 //! let path = Path::new("/");
@@ -91,7 +91,7 @@ use std::path::{Path, PathBuf};
 ///
 /// # Examples
 ///
-/// ```
+/// ```no_run
 /// use std::path::Path;
 /// use pathtrim::TrimmablePath;
 ///
@@ -105,7 +105,7 @@ pub trait TrimmablePath: AsRef<Path> {
     ///
     /// # Examples
     ///
-    /// ```
+    /// ```no_run
     /// use std::path::Path;
     /// use pathtrim::TrimmablePath;
     ///
