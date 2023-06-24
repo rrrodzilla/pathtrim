@@ -37,24 +37,20 @@
 //!    
 //! ```
 
+use std::path::{Component, Path, PathBuf, MAIN_SEPARATOR};
 
-use std::path::{Path, PathBuf, MAIN_SEPARATOR};
-
-/// The TrimmablePath trait on std::path::Path so you can easily obtain the
-/// last *n* parts of anything that implements AsRef<Path>.
 pub trait TrimmablePath: AsRef<Path> {
-    /// Returns an Option<PathBuf>.
-    /// If *n* is longer than the length of the Path, returns None
     fn trim_to_nth(&self, n: usize) -> Option<PathBuf> {
         let path = self.as_ref();
-        let len = path.components().count();
-        
+        let components: Vec<_> = path.components().collect();
+        let len = components.len();
+
         if len > n {
-            let mut c = path.components();
-            c.nth(len - (n + 1));
-            let mut trimmed = c.as_path().to_owned();
-            if trimmed.as_os_str().is_empty() {
-                trimmed = PathBuf::from(MAIN_SEPARATOR.to_string());
+            let trimmed_components: Vec<_> = components.into_iter().skip(len - n).collect();
+            let mut trimmed = trimmed_components.iter().collect::<PathBuf>();
+            if trimmed_components.last().map(|c| c.as_os_str()) == Some(Component::RootDir.as_ref())
+            {
+                trimmed = trimmed.join(MAIN_SEPARATOR.to_string());
             }
             Some(trimmed)
         } else {
@@ -62,7 +58,6 @@ pub trait TrimmablePath: AsRef<Path> {
         }
     }
 }
-
 // automagically implement for all Paths in usage scope
 impl TrimmablePath for Path {}
 
