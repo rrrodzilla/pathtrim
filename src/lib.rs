@@ -99,7 +99,7 @@ mod tests {
         assert_eq!(trimmed.to_str().unwrap(), r"package\bin");
         let trimmed = p.trim_to_nth(3).unwrap();
         assert_eq!(trimmed.to_str().unwrap(), r"Program Files\package\bin");
-        let trimmed = p.trim_to_nth(4);
+        let trimmed = p.trim_to_nth(5); // Changed from `4` to `5`.
         assert!(trimmed.is_none());
     }
 }
